@@ -1,0 +1,33 @@
+version: '3'
+services:
+  web:
+    build: .
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql_root_password     # MySQL ROOT password > (user_name : ROOT)
+      MYSQL_USER: php_app_database_username        # app_database_user_name
+      MYSQL_PASSWORD: php_app_database_password    # app_database_password
+      MYSQL_DATABASE: php_app_database             # app_database_name
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: root                                  # phpMyAdmin > connect AS > user_name : ANY USER OR ROOT
+      PMA_PASSWORD: mysql_root_password               # phpMyAdmin > connect AS > user_password : ANY USER OR ROOT
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+volumes:
+  db_data:
