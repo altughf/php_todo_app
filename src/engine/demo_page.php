@@ -7,14 +7,17 @@
   <link href="./output/output.css" rel="stylesheet">
   <link rel="icon" type="image/x-icon" href="./files/fav/note.png" sizes="32x32">
 
-  <title>Php App</title>
+  <title><?php echo SITENAME; ?></title>
 
 </head>
 <body>
 
-  <h1 class="test-item w-full h-screen text-5xl font-poppins font-bold bg-neutral-200">
-    PHP > To do Start!
-  </h1>
+  <div class="test-item flex-col gap-5 w-full h-screen text-5xl font-poppins bg-neutral-200">
+
+    <div class="font-bold">PHP > To do Start!</div>
+    <div class="text-neutral-500 font-bold"><?php echo SITENAME; ?> : Back-End Access!</div>
+
+  </div>
 
 </body>
 </html>
