@@ -1,0 +1,9 @@
+<?php
+
+class TodoModel {
+
+    /* PREPARE */
+
+}
+
+?>

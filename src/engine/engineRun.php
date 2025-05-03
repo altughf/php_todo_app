@@ -10,6 +10,9 @@ require_once 'utility/url_direction.php';
 require_once 'preferences/config_constants.php';
 require_once 'preferences/config_db.php';
 
+// DATABASE CONNECT
+require_once 'Database/DatabaseTasks.php';
+
 // ------------ //
 
 require_once 'demo_page.php';
