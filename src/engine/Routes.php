@@ -16,8 +16,17 @@ Router::get('/favicon.ico', function() {
 });
 // --------------- //
 
-Router::get('/', [DashboardController::class, 'index']);
+// PRIMARY TASKS
+
 Router::get('/api/todos', [TodoController::class, 'index']);
-Router::get('/api/categories', [CategoryController::class, 'index']);
+Router::get('/api/todos/{id}', [TodoController::class, 'open']);
+Router::post('/api/todos', [TodoController::class, 'create']);
+Router::put('/api/todos/{id}', [TodoController::class, 'update']);
+Router::patch('/api/todos/{id}/status', [TodoController::class, 'updateStatus']);
+Router::delete('/api/todos/{id}', [TodoController::class, 'delete']);
+Router::get('/api/todos/search', [TodoController::class, 'search']);
+
+// Router::get('/', [DashboardController::class, 'index']);
+// Router::get('/api/categories', [CategoryController::class, 'index']);
 
 ?>
