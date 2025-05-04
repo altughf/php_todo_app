@@ -18,7 +18,9 @@ Router::get('/favicon.ico', function() {
 
 // PRIMARY TASKS
 
+Router::get('/', [DashboardController::class, 'index']);
 Router::get('/api/todos', [TodoController::class, 'index']);
+
 Router::get('/api/todos/{id}', [TodoController::class, 'open']);
 Router::post('/api/todos', [TodoController::class, 'create']);
 Router::put('/api/todos/{id}', [TodoController::class, 'update']);

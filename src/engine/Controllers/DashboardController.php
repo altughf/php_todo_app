@@ -6,7 +6,7 @@ class DashboardController {
 
         $controller_test = 'Dashboard';
 
-        require_once APPROOT . '/demo_page.php';
+        require_once APPROOT . '/views/site.php';
 
     }
 
