@@ -15,6 +15,16 @@ require_once 'Database/DatabaseTasks.php';
 
 // ------------ //
 
-require_once 'demo_page.php';
+// ROUTER
+
+require_once 'vendor/autoload.php';
+
+use Pecee\SimpleRouter\SimpleRouter as Router;
+
+require_once 'Routes.php';
+
+Router::start();
+
+// ----------- //
 
 ?>
