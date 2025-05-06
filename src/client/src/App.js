@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import AddTodo from './components/AddTodo';
+import ListTodos from './components/ListTodos';
+import OpenTodo from './components/OpenTodo';
+import UpdateTodo from './components/UpdateTodo';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div style={{ padding: '2rem' }}>
+        <h1>To-Do App</h1>
+        <nav style={{ marginBottom: '1rem' }}>
+          <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
+            <li><Link to="/add">Add Todo</Link></li>
+            <li><Link to="/list">List Todos</Link></li>
+            <li><Link to="/open/1">Open Todo (id:1)</Link></li>
+            <li><Link to="/update/1">Update Todo (id:1)</Link></li>
+          </ul>
+        </nav>
+
+        <Routes>
+          <Route path="/add" element={<AddTodo />} />
+          <Route path="/list" element={<ListTodos />} />
+          <Route path="/open/:id" element={<OpenTodo />} />
+          <Route path="/update/:id" element={<UpdateTodo />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
