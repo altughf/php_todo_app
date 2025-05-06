@@ -47,6 +47,8 @@ export default function CreateTodo() {
   };
 
   return (
+
+    <div className="flex justify-center items-center w-full rounded-lg bg-neutral-100 p-4 max-w-7xl m-auto">
     <div className="relative flex items-start flex-col p-6 gap-5 w-96 h-full font-poppins bg-neutral-200">
       <div className="font-bold text-4xl">Create To Do!</div>
       <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit}>
@@ -123,5 +125,7 @@ export default function CreateTodo() {
         </button>
       </form>
     </div>
+    </div>
+
   );
 }
