@@ -5,6 +5,5 @@
   },
   "scripts": {
     "dev": "npx @tailwindcss/cli -i ./src/public/input/input.css -o ./src/public/output/output.css --watch"
-  },
-  "proxy": "http://php-app.link"
+  }
 }

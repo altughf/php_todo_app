@@ -4,6 +4,7 @@ import AddTodo from './components/AddTodo';
 import ListTodos from './components/ListTodos';
 import OpenTodo from './components/OpenTodo';
 import UpdateTodo from './components/UpdateTodo';
+import './styles/style.css';
 
 function App() {
   return (
