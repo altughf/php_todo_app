@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import AddTodo from './pages/AddTodo';
-import ListTodos from './pages/ListTodos';
-import OpenTodo from './pages/OpenTodo';
-import UpdateTodo from './pages/UpdateTodo';
+import AddTodoPage from './pages/TodoAdd';
+import ListTodosPage from './pages/TodoListPage';
+import OpenTodoPage from './pages/TodoDetailPage';
+import UpdateTodoPage from './pages/TodoUpdatePage';
 import './styles/style.css';
 
 function App() {
@@ -37,11 +37,11 @@ function App() {
         </div>
 
         <Routes>
-          <Route path="/" element={<ListTodos />} />
-          <Route path="/add" element={<AddTodo />} />
-          <Route path="/list" element={<ListTodos />} />
-          <Route path="/open/:id" element={<OpenTodo />} />
-          <Route path="/update/:id" element={<UpdateTodo />} />
+          <Route path="/" element={<ListTodosPage />} />
+          <Route path="/add" element={<AddTodoPage />} />
+          <Route path="/list" element={<ListTodosPage />} />
+          <Route path="/open/:id" element={<OpenTodoPage />} />
+          <Route path="/update/:id" element={<UpdateTodoPage />} />
         </Routes>
 
       </div>
