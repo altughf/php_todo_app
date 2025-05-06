@@ -37,6 +37,7 @@ function App() {
         </div>
 
         <Routes>
+          <Route path="/" element={<ListTodos />} />
           <Route path="/add" element={<AddTodo />} />
           <Route path="/list" element={<ListTodos />} />
           <Route path="/open/:id" element={<OpenTodo />} />
