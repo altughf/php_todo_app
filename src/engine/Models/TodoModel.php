@@ -131,7 +131,7 @@ class TodoModel {
     public function todosModel($filter_parameters) {
         $offset = ($filter_parameters['page'] - 1) * $filter_parameters['limit'];
     
-        $query = "SELECT * FROM todos WHERE 1=1";
+        $query = "SELECT * FROM todos WHERE deleted_at IS NULL";
     
         $bindings = [];
     
