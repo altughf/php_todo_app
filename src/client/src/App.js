@@ -37,10 +37,10 @@ function App() {
 
         <Routes>
           <Route path="/" element={<ListTodosPage />} />
-          <Route path="/add" element={<FormTodoPage />} />
+          <Route path="/add" element={<FormTodoPage mode="add" />} />
           <Route path="/list" element={<ListTodosPage />} />
           <Route path="/open/:id" element={<OpenTodoPage />} />
-          <Route path="/update/:id" element={<FormTodoPage />} />
+          <Route path="/update/:id" element={<FormTodoPage mode="edit" />} />
         </Routes>
 
       </div>
