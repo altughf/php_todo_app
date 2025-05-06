@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import AddTodoPage from './pages/TodoAdd';
+import FormTodoPage from './pages/TodoForm';
 import ListTodosPage from './pages/TodoListPage';
 import OpenTodoPage from './pages/TodoDetailPage';
-import UpdateTodoPage from './pages/TodoUpdatePage';
 import './styles/style.css';
 
 function App() {
@@ -38,10 +37,10 @@ function App() {
 
         <Routes>
           <Route path="/" element={<ListTodosPage />} />
-          <Route path="/add" element={<AddTodoPage />} />
+          <Route path="/add" element={<FormTodoPage />} />
           <Route path="/list" element={<ListTodosPage />} />
           <Route path="/open/:id" element={<OpenTodoPage />} />
-          <Route path="/update/:id" element={<UpdateTodoPage />} />
+          <Route path="/update/:id" element={<FormTodoPage />} />
         </Routes>
 
       </div>
