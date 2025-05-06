@@ -128,20 +128,48 @@ class TodoModel {
 
     }
 
-    public function todosModel(){
+    public function todosModel($filter_parameters) {
+        $offset = ($filter_parameters['page'] - 1) * $filter_parameters['limit'];
+    
+        $query = "SELECT * FROM todos WHERE 1=1";
+    
+        $bindings = [];
+    
+        if (!empty($filter_parameters['status'])) {
+            $query .= " AND status = :status";
+            $bindings[':status'] = $filter_parameters['status'];
+        }
+    
+        if (!empty($filter_parameters['priority'])) {
+            $query .= " AND priority = :priority";
+            $bindings[':priority'] = $filter_parameters['priority'];
+        }
+    
+        // Güvenli sıralama için izin verilen kolonları kontrol et
+        $sortable = ['created_at', 'due_date', 'priority'];
+        $orderable = ['asc', 'desc'];
+    
+        if (!in_array($filter_parameters['sort'], $sortable)) {
+            $filter_parameters['sort'] = 'due_date';
+        }
+    
+        if (!in_array($filter_parameters['order'], $orderable)) {
+            $filter_parameters['order'] = 'asc';
+        }
+    
+        $query .= " ORDER BY {$filter_parameters['sort']} {$filter_parameters['order']} LIMIT :limit OFFSET :offset";
+    
+        $this->databaseInstance->query($query);
 
-        $this->databaseInstance->query(
-
-            'SELECT todos.id, todos.title, todos.description, todos.status, todos.priority, todos.due_date, todos.created_at, todos.updated_at, todos.deleted_at
-            FROM todos'
-
-        );
-
-        $todos = $this->databaseInstance->resultSet();
-
-        return $todos;
-
-    }
+        foreach ($bindings as $key => $value) {
+            $this->databaseInstance->bind($key, $value);
+        }
+    
+        $this->databaseInstance->bind(':limit', (int)$filter_parameters['limit']);
+        $this->databaseInstance->bind(':offset', (int)$offset);
+    
+        return $this->databaseInstance->resultSet();
+    }    
 
 }
 

@@ -10,15 +10,27 @@ class TodoController {
         $this->todoModel_instance = new TodoModel;
     }
 
-    public function index(){
-
-        // DEFAULT LIST # OR # ANALYZE QUERY
-
-        $data = $this->todoModel_instance->todosModel();
-
+    public function index() {
+        $page = $_GET['page'] ?? 1;
+        $limit = min($_GET['limit'] ?? 10, 50);
+        $sort = $_GET['sort'] ?? 'due_date';
+        $order = strtolower($_GET['order'] ?? 'asc');
+        $status = $_GET['status'] ?? null;
+        $priority = $_GET['priority'] ?? null;
+    
+        $filter_parameters = [
+            'page' => (int)$page,
+            'limit' => (int)$limit,
+            'sort' => $sort,
+            'order' => $order,
+            'status' => $status,
+            'priority' => $priority,
+        ];
+    
+        $data = $this->todoModel_instance->todosModel($filter_parameters);
+    
         http_response_code(200);
-        echo json_encode(['status' => 'success','information' => $data]);
-
+        echo json_encode(['status' => 'success', 'information' => $data]);
     }
 
     public function open($id){
