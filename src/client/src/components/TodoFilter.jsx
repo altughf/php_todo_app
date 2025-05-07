@@ -25,7 +25,9 @@ export default function TodoListFilter({ filters, setFilters }) {
       <select name="status" value={filters.status} onChange={handleChange} className="p-2 border rounded">
         <option value="">All Statuses</option>
         <option value="pending">Pending</option>
+        <option value="in_progress">In Progress</option>
         <option value="completed">Completed</option>
+        <option value="cancelled">Cancelled</option>
       </select>
 
       {/* Priority filter */}
