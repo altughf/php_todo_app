@@ -17,6 +17,7 @@ class TodoController {
         $order = strtolower($_GET['order'] ?? 'asc');
         $status = $_GET['status'] ?? null;
         $priority = $_GET['priority'] ?? null;
+        $q = $_GET['q'] ?? null;
     
         $filter_parameters = [
             'page' => (int)$page,
@@ -25,6 +26,7 @@ class TodoController {
             'order' => $order,
             'status' => $status,
             'priority' => $priority,
+            'q' => $q,
         ];
     
         $data = $this->todoModel_instance->todosModel($filter_parameters);

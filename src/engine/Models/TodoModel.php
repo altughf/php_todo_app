@@ -150,7 +150,12 @@ class TodoModel {
             $query .= " AND priority = :priority";
             $bindings[':priority'] = $filter_parameters['priority'];
         }
-    
+
+        if (!empty($filter_parameters['q'])) {
+            $query .= " AND (title LIKE :q OR description LIKE :q)";
+            $bindings[':q'] = '%' . $filter_parameters['q'] . '%';
+        }
+
         // Güvenli sıralama için izin verilen kolonları kontrol et
         $sortable = ['created_at', 'due_date', 'priority'];
         $orderable = ['asc', 'desc'];
