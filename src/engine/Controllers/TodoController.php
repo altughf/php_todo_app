@@ -31,9 +31,26 @@ class TodoController {
     
         $data = $this->todoModel_instance->todosModel($filter_parameters);
         $data_total = $this->todoModel_instance->todosCountModel($filter_parameters);
+
+        // ----------------- // pagination meta description
+        $last_page = ceil($data_total / $limit);
+        $from = ($page - 1) * $limit + 1;
+        $to = min($page * $limit, $data_total);
+
+        $meta_send = [
+            'pagination' => [
+                'total' => (int) $data_total,
+                'per_page' => (int) $limit,
+                'current_page' => (int) $page,
+                'last_page' => (int) $last_page,
+                'from' => $data_total ? (int) $from : null,
+                'to' => $data_total ? (int) $to : null,
+            ]
+        ];
+        // ----------------- //
     
         http_response_code(200);
-        echo json_encode(['status' => 'success', 'information' => $data, 'meta' => $data_total]);
+        echo json_encode(['status' => 'success', 'information' => $data, 'meta' => $meta_send]);
     }
 
     public function open($id){
