@@ -111,22 +111,28 @@ class TodoModel {
 
     }
 
+    /* ##### SOFT DELETE ##### */
+
+    public function deleteModel($todo_item_id) {
+        $this->databaseInstance->query('UPDATE todos SET deleted_at = NOW() WHERE id = :todo_item_id');
+    
+        $this->databaseInstance->bind(':todo_item_id', $todo_item_id);
+        return $this->databaseInstance->execute();
+    }
+
+    /*
+    
+    ##### HARD DELETE #####
+
     public function deleteModel($todo_item_id){
 
         $this->databaseInstance->query('DELETE FROM todos WHERE todos.id = :todo_item_id');
 
         $this->databaseInstance->bind(':todo_item_id',$todo_item_id);
-
-        if($this->databaseInstance->execute()){
-
-            return true;
-
-        } else {
-
-            return false;
-        }
-
+        if($this->databaseInstance->execute()){ return true; } else { return false; }
     }
+
+    */
 
     public function todosModel($filter_parameters) {
         $offset = ($filter_parameters['page'] - 1) * $filter_parameters['limit'];
