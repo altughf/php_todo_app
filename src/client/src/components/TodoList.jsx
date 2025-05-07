@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function TodoListItem({ todo }) {
   const navigate = useNavigate();
+  const [status, setStatus] = useState(todo.status);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const handleDelete = async () => {
     const confirmed = window.confirm("Bu todo öğesini silmek istediğinize emin misiniz?");
@@ -15,8 +17,7 @@ export default function TodoListItem({ todo }) {
 
       if (response.ok) {
         alert('Todo başarıyla silindi.');
-        // Sayfayı yenilemek veya üst componente haber vermek gerekebilir
-        window.location.reload(); // ya da bir prop ile parent component'e bildirilebilir
+        window.location.reload();
       } else {
         alert('Silme işlemi başarısız oldu.');
       }
@@ -26,12 +27,53 @@ export default function TodoListItem({ todo }) {
     }
   };
 
+  const handleStatusChange = async (e) => {
+    const newStatus = e.target.value;
+    setIsUpdating(true);
+
+    try {
+      const response = await fetch(`/api/todos/${todo.id}/status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ "todo-status": newStatus }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.status === "success") {
+        setStatus(newStatus);
+      } else {
+        alert("Durum güncellemesi başarısız oldu.");
+      }
+    } catch (error) {
+      console.error("Durum güncellenirken hata oluştu:", error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   return (
     <div className="p-4 bg-neutral-200 rounded-md shadow">
       <h3 className="text-xl font-bold">{todo.title}</h3>
       <p className="text-sm text-gray-600">{todo.description}</p>
+
       <div className="mt-2 text-sm flex flex-wrap gap-4 text-gray-700">
-        <span>Status: <strong>{todo.status}</strong></span>
+        <div>
+          Status:
+          <select
+            value={status}
+            onChange={handleStatusChange}
+            disabled={isUpdating}
+            className="ml-2 p-1 rounded bg-white border"
+          >
+            <option value="pending">Pending</option>
+            <option value="in_progress">In Progress</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
         <span>Priority: <strong>{todo.priority}</strong></span>
         <span>Due: <strong>{new Date(todo.due_date).toLocaleString()}</strong></span>
       </div>
