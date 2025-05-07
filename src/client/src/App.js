@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import FormTodoPage from './pages/TodoForm';
 import ListTodosPage from './pages/TodoListPage';
 import OpenTodoPage from './pages/TodoDetailPage';
+
+import logo from './logo.svg';
 import './styles/style.css';
 
 function App() {
@@ -15,8 +17,8 @@ function App() {
           <div className="flex justify-between items-center w-full h-28 rounded-lg bg-neutral-200 p-6 max-w-7xl">
 
           {/* LOGO */}
-          <Link to="/" className="font-poppins text-4xl font-bold text-neutral-500">
-            <span className="text-neutral-600">TO DO</span> <span className="text-neutral-400">APP</span>
+          <Link to="/">
+            <img src={logo} alt="Logo" className="h-9 w-full" />
           </Link>
 
           {/* NAVIGATION */}
