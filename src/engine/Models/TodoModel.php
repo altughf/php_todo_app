@@ -182,6 +182,36 @@ class TodoModel {
         return $this->databaseInstance->resultSet();
     }    
 
+    public function todosCountModel($filter_parameters) {
+        $query = "SELECT COUNT(*) as total_results FROM todos WHERE deleted_at IS NULL";
+        $bindings = [];
+    
+        if (!empty($filter_parameters['status'])) {
+            $query .= " AND status = :status";
+            $bindings[':status'] = $filter_parameters['status'];
+        }
+    
+        if (!empty($filter_parameters['priority'])) {
+            $query .= " AND priority = :priority";
+            $bindings[':priority'] = $filter_parameters['priority'];
+        }
+    
+        if (!empty($filter_parameters['q'])) {
+            $query .= " AND (title LIKE :q OR description LIKE :q)";
+            $bindings[':q'] = '%' . $filter_parameters['q'] . '%';
+        }
+    
+        $this->databaseInstance->query($query);
+    
+        foreach ($bindings as $key => $value) {
+            $this->databaseInstance->bind($key, $value);
+        }
+    
+        $result = $this->databaseInstance->single();
+    
+        return $result->total_results;
+    }
+
 }
 
 ?>

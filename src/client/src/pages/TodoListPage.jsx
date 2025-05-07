@@ -27,6 +27,8 @@ export default function ListTodos() {
       }
 
       const data = await response.json();
+
+      console.log(data.meta);
       setTodos(data.information);
     } catch (error) {
       console.error('Failed to fetch todos:', error);

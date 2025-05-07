@@ -30,9 +30,10 @@ class TodoController {
         ];
     
         $data = $this->todoModel_instance->todosModel($filter_parameters);
+        $data_total = $this->todoModel_instance->todosCountModel($filter_parameters);
     
         http_response_code(200);
-        echo json_encode(['status' => 'success', 'information' => $data]);
+        echo json_encode(['status' => 'success', 'information' => $data, 'meta' => $data_total]);
     }
 
     public function open($id){
