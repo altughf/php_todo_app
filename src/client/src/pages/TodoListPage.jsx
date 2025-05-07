@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import TodoListItem from '../components/TodoList';
+import TodoItem from '../components/TodoItem';
 import TodoListFilter from '../components/TodoFilter';
 
 export default function ListTodos() {
@@ -51,7 +51,7 @@ export default function ListTodos() {
         ) : (
           <div className="flex flex-col gap-4 font-poppins w-full">
             {todos.map((todo) => (
-              <TodoListItem key={todo.id} todo={todo} />
+              <TodoItem key={todo.id} todo={todo} />
             ))}
           </div>
         )}

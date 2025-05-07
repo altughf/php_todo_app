@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function TodoListItem({ todo }) {
+export default function TodoItem({ todo }) {
   const navigate = useNavigate();
   const [status, setStatus] = useState(todo.status);
   const [isUpdating, setIsUpdating] = useState(false);
