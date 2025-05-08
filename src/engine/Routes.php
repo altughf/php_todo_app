@@ -28,11 +28,11 @@ Router::patch('/api/todos/{id}/status', [TodoController::class, 'updateStatus'])
 Router::delete('/api/todos/{id}', [TodoController::class, 'delete']);
 Router::get('/api/todos/search', [TodoController::class, 'search']);
 
-Router::get('/api/categories', [TodoController::class, 'index']);
-Router::get('/api/categories/{id}', [TodoController::class, 'open']);
-Router::post('/api/categories', [TodoController::class, 'create']);
-Router::put('/api/categories/{id}', [TodoController::class, 'update']);
-Router::delete('/api/categories/{id}', [TodoController::class, 'delete']);
-Router::get('/api/categories/{id}/todos', [TodoController::class, 'todo_list']);
+Router::get('/api/categories', [CategoryController::class, 'index']);
+Router::get('/api/categories/{id}', [CategoryController::class, 'open']);
+Router::post('/api/categories', [CategoryController::class, 'create']);
+Router::put('/api/categories/{id}', [CategoryController::class, 'update']);
+Router::delete('/api/categories/{id}', [CategoryController::class, 'delete']);
+Router::get('/api/categories/{id}/todos', [CategoryController::class, 'todo_list']);
 
 ?>

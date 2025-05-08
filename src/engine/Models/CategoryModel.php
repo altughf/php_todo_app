@@ -60,7 +60,7 @@ class CategoryModel {
 
         $this->databaseInstance->query(
 
-            'SELECT categories.id, categories.title, categories.description
+            'SELECT categories.id, categories.name, categories.color
             FROM categories
             WHERE categories.id = :category_item_id'
 
