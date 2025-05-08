@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function TodoItem({ todo }) {
-  const navigate = useNavigate();
   const [status, setStatus] = useState(todo.status);
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -55,18 +54,18 @@ export default function TodoItem({ todo }) {
   };
 
   return (
-    <div className="p-4 bg-neutral-200 rounded-md shadow">
-      <h3 className="text-xl font-bold">{todo.title}</h3>
-      <p className="text-sm text-gray-600">{todo.description}</p>
+    <div className="p-4 bg-white border border-gray-300 rounded-md">
+      <h3 className="text-lg font-semibold text-gray-800">{todo.title}</h3>
+      <p className="text-sm text-gray-600 mt-1">{todo.description}</p>
 
-      <div className="mt-2 text-sm flex flex-wrap gap-4 text-gray-700">
-        <div>
-          Status:
+      <div className="mt-3 text-sm flex flex-wrap gap-4 text-gray-700">
+        <div className="flex items-center gap-2">
+          <span>Status:</span>
           <select
             value={status}
             onChange={handleStatusChange}
             disabled={isUpdating}
-            className="ml-2 p-1 rounded bg-white border"
+            className="px-2 py-1 border border-gray-300 rounded bg-white text-sm focus:outline-none focus:ring-1 focus:ring-gray-400"
           >
             <option value="pending">Pending</option>
             <option value="in_progress">In Progress</option>
@@ -78,13 +77,12 @@ export default function TodoItem({ todo }) {
         <span>Due: <strong>{new Date(todo.due_date).toLocaleString()}</strong></span>
       </div>
 
-      {/* Kategoriler */}
       {todo.category_ids && todo.category_ids.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-2">
           {todo.category_ids.map((cat) => (
             <span
               key={cat.id}
-              className="text-xs px-2 py-1 rounded-md select-none"
+              className="text-xs px-2 py-1 rounded select-none"
               style={{
                 backgroundColor: cat.color,
                 color: '#fff',
@@ -96,21 +94,20 @@ export default function TodoItem({ todo }) {
         </div>
       )}
 
-      {/* Oluşturulma ve güncellenme tarihleri */}
       <div className="mt-3 text-xs text-gray-500">
         <p>Created: {new Date(todo.created_at).toLocaleString()}</p>
         <p>Updated: {new Date(todo.updated_at).toLocaleString()}</p>
       </div>
 
       <div className="flex gap-2 mt-4">
-        <button
-          className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
-          onClick={() => navigate(`/update/${todo.id}`)}
+        <Link
+          to={`/update/${todo.id}`}
+          className="px-3 py-1 border border-gray-400 text-gray-700 hover:bg-gray-100 rounded text-sm"
         >
           Edit
-        </button>
+        </Link>
         <button
-          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+          className="px-3 py-1 border border-red-400 text-red-600 hover:bg-red-50 rounded text-sm"
           onClick={handleDelete}
         >
           Delete
