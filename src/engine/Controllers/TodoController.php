@@ -3,11 +3,15 @@
 class TodoController {
 
     private $todoModel_instance;
+    private $categoryModel_instance;
 
     public function __construct(){
 
         require_once APPROOT . '/Models/TodoModel.php';
         $this->todoModel_instance = new TodoModel;
+
+        require_once APPROOT . '/Models/CategoryModel.php';
+        $this->categoryModel_instance = new CategoryModel;
     }
 
     public function index() {
@@ -76,6 +80,7 @@ class TodoController {
             'status'                => trim($data['todo-status']),
             'priority'              => trim($data['todo-priority']),
             'due_date'              => trim($data['todo-due-time']),
+            'category_ids'          => $data['todo-category-ids'],
         ];
 
         $insert_ok = $this->todoModel_instance->createModel($todo_item);
@@ -100,6 +105,7 @@ class TodoController {
             'status'                => trim($data['todo-status']),
             'priority'              => trim($data['todo-priority']),
             'due_date'              => trim($data['todo-due-time']),
+            'category_ids'          => $data['todo-category-ids'],
         ];
 
         $update_ok = $this->todoModel_instance->updateModel($todo_item);

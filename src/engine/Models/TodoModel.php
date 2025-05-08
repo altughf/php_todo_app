@@ -12,54 +12,78 @@ class TodoModel {
     public function createModel($todo_item){
 
         $this->databaseInstance->query(
-
-            'INSERT INTO todos(title,description,status,priority,due_date) VALUES(:t_title,:t_description,:t_status,:t_priority,:t_due_date)'
-
+            'INSERT INTO todos(title, description, status, priority, due_date)
+             VALUES(:t_title, :t_description, :t_status, :t_priority, :t_due_date)'
         );
+    
+        $this->databaseInstance->bind(':t_title', $todo_item['title']);
+        $this->databaseInstance->bind(':t_description', $todo_item['description']);
+        $this->databaseInstance->bind(':t_status', $todo_item['status']);
+        $this->databaseInstance->bind(':t_priority', $todo_item['priority']);
+        $this->databaseInstance->bind(':t_due_date', $todo_item['due_date']);
+    
+        if ($this->databaseInstance->execute()) {
 
-        $this->databaseInstance->bind(':t_title',$todo_item['title']);
-        $this->databaseInstance->bind(':t_description',$todo_item['description']);
-        $this->databaseInstance->bind(':t_status',$todo_item['status']);
-        $this->databaseInstance->bind(':t_priority',$todo_item['priority']);
-        $this->databaseInstance->bind(':t_due_date',$todo_item['due_date']);
+            $todoId = $this->databaseInstance->lastInsertId(); // TAKE LAST INSERTED > TODO_ITEM ID > FOR ADD IT'S CATEGORIES
 
-        if($this->databaseInstance->execute()){
-
+            if (!empty($todo_item['category_ids']) && is_array($todo_item['category_ids'])) {
+                foreach ($todo_item['category_ids'] as $categoryId) {
+                    $this->databaseInstance->query(
+                        'INSERT INTO todo_category (todo_id, category_id) VALUES (:todo_id, :category_id)'
+                    );
+                    $this->databaseInstance->bind(':todo_id', $todoId);
+                    $this->databaseInstance->bind(':category_id', $categoryId);
+                    $this->databaseInstance->execute();
+                }
+            }
+    
             return true;
 
-        } else {
-
-            return false;
-        }
+        } else { return false; }
 
     }
 
     public function updateModel($todo_item){
 
         $this->databaseInstance->query(
-
             'UPDATE todos
             SET title = :t_title, description = :t_description, status = :t_status, priority = :t_priority, due_date = :t_due_date
-            WHERE todos.id = :todo_item_id'
-
+            WHERE id = :todo_item_id'
         );
 
-        $this->databaseInstance->bind(':todo_item_id',$todo_item['id']);
-        $this->databaseInstance->bind(':t_title',$todo_item['title']);
-        $this->databaseInstance->bind(':t_description',$todo_item['description']);
-        $this->databaseInstance->bind(':t_status',$todo_item['status']);
-        $this->databaseInstance->bind(':t_priority',$todo_item['priority']);
-        $this->databaseInstance->bind(':t_due_date',$todo_item['due_date']);
+        $this->databaseInstance->bind(':todo_item_id', $todo_item['id']);
+        $this->databaseInstance->bind(':t_title', $todo_item['title']);
+        $this->databaseInstance->bind(':t_description', $todo_item['description']);
+        $this->databaseInstance->bind(':t_status', $todo_item['status']);
+        $this->databaseInstance->bind(':t_priority', $todo_item['priority']);
+        $this->databaseInstance->bind(':t_due_date', $todo_item['due_date']);
 
-        if($this->databaseInstance->execute()){
+        if ($this->databaseInstance->execute()) {
+
+            // TODO_ITEM > DELETE ALL CATEGORIES BEFORE (MANY TO MANY > FOR NO COMPLICATION)
+            $this->databaseInstance->query(
+                'DELETE FROM todo_category WHERE todo_id = :todo_id'
+            );
+            $this->databaseInstance->bind(':todo_id', $todo_item['id']);
+            $this->databaseInstance->execute();
+
+            // ADD NEW ONES > UPDATED CATEGORIES
+            if (!empty($todo_item['category_ids']) && is_array($todo_item['category_ids'])) {
+                foreach ($todo_item['category_ids'] as $categoryId) {
+                    $this->databaseInstance->query(
+                        'INSERT INTO todo_category (todo_id, category_id) VALUES (:todo_id, :category_id)'
+                    );
+                    $this->databaseInstance->bind(':todo_id', $todo_item['id']);
+                    $this->databaseInstance->bind(':category_id', $categoryId);
+                    $this->databaseInstance->execute();
+                }
+            }
 
             return true;
 
         } else {
-
             return false;
         }
-
     }
 
     public function updateStatusModel($todo_item){
@@ -100,14 +124,25 @@ class TodoModel {
 
         $openTodo_item = $this->databaseInstance->single();
 
-        if($this->databaseInstance->rowCount() > 0){
-
-            return $openTodo_item;
-
-        } else {
-
+        if ($this->databaseInstance->rowCount() === 0) {
             go_direction('404');
         }
+    
+        // QUERY 02 > CATEGORIES (Many To Many)
+        $this->databaseInstance->query(
+            'SELECT categories.id, categories.name, categories.color
+            FROM todo_category
+            INNER JOIN categories ON todo_category.category_id = categories.id
+            WHERE todo_category.todo_id = :todo_item_id'
+        );
+    
+        $this->databaseInstance->bind(':todo_item_id', $todo_item_id);
+        $category_descriptor = $this->databaseInstance->resultSet();
+    
+        // ADD CATEGORIES TO RESULTS
+        $openTodo_item->categories = !empty($category_descriptor) ? $category_descriptor : [];
+    
+        return $openTodo_item;
 
     }
 
@@ -156,7 +191,6 @@ class TodoModel {
             $bindings[':q'] = '%' . $filter_parameters['q'] . '%';
         }
 
-        // Güvenli sıralama için izin verilen kolonları kontrol et
         $sortable = ['created_at', 'due_date', 'priority'];
         $orderable = ['asc', 'desc'];
     

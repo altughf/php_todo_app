@@ -10,6 +10,8 @@ export default function CreateTodo({ mode = 'add' }) {
   const [status, setStatus] = useState('pending');
   const [priority, setPriority] = useState('medium');
   const [dueTime, setDueTime] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
 
   useEffect(() => {
     if (mode === 'edit' && id) {
@@ -26,6 +28,7 @@ export default function CreateTodo({ mode = 'add' }) {
           setStatus(data['status'] || 'pending');
           setPriority(data['priority'] || 'medium');
           setDueTime(data['due_date']?.slice(0, 16) || '');
+          setSelectedCategoryIds((data.categories || []).map((c) => c.id));
         } catch (err) {
           console.error('Fetch error:', err);
         }
@@ -34,6 +37,32 @@ export default function CreateTodo({ mode = 'add' }) {
     }
   }, [mode, id]);
 
+  // Fetch categories
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch('/api/categories');
+        if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+        const data = await res.json();
+        setCategories(data.information || []);
+      } catch (err) {
+        console.error('Category fetch error:', err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  // Toggle category selection
+  const toggleCategorySelection = (catId) => {
+    setSelectedCategoryIds((prev) =>
+      prev.includes(catId)
+        ? prev.filter((id) => id !== catId)
+        : [...prev, catId]
+    );
+  };
+
+  // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -43,6 +72,7 @@ export default function CreateTodo({ mode = 'add' }) {
       'todo-status': status,
       'todo-priority': priority,
       'todo-due-time': dueTime,
+      'todo-category-ids': selectedCategoryIds,
     };
 
     try {
@@ -60,7 +90,6 @@ export default function CreateTodo({ mode = 'add' }) {
       console.log(`Todo ${mode === 'edit' ? 'updated' : 'created'}:`, data);
 
       navigate('/list');
-
     } catch (err) {
       console.error('Submission error:', err);
     }
@@ -141,6 +170,22 @@ export default function CreateTodo({ mode = 'add' }) {
               value={dueTime}
               onChange={(e) => setDueTime(e.target.value)}
             />
+          </div>
+
+          {/* Categories */}
+          <div className="text-xl font-bold text-neutral-500">Categories</div>
+          <div className="flex flex-col bg-neutral-300 p-4 gap-2">
+            {categories.map((cat) => (
+              <label key={cat.id} className="text-base font-medium flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  value={cat.id}
+                  checked={selectedCategoryIds.includes(cat.id)}
+                  onChange={() => toggleCategorySelection(cat.id)}
+                />
+                {cat.name}
+              </label>
+            ))}
           </div>
 
           {/* Submit */}
