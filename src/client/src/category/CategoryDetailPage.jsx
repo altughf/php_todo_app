@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 export default function OpenCategory() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [category, setCategory] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         fetch(`/api/categories/${id}`)
@@ -24,16 +26,47 @@ export default function OpenCategory() {
             .finally(() => setLoading(false));
     }, [id]);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+    const handleDelete = async () => {
+        if (!window.confirm("Are you sure you want to delete this category?")) return;
+
+        setDeleting(true);
+        try {
+            const response = await fetch(`/api/categories/${id}`, { method: 'DELETE' });
+            if (!response.ok) throw new Error('Delete operation failed');
+            navigate('/categories');
+        } catch (err) {
+            alert('Error: ' + err.message);
+        } finally {
+            setDeleting(false);
+        }
+    };
+
+    if (loading) return <div className="text-center text-gray-500 mt-10">Loading...</div>;
+    if (error) return <div className="text-center text-red-500 mt-10">Error: {error}</div>;
 
     return (
-        <div className="flex items-center w-full rounded-lg bg-neutral-100 p-4 max-w-7xl m-auto">
-            <div className="flex flex-col gap-2">
-                <h1 className="text-2xl font-bold mb-2">{category.name}</h1>
-                <p className="mb-1"><strong>Color:</strong> {category.color}</p>
-                <p className="text-sm text-gray-500"><strong>Created At:</strong> {category.created_at}</p>
-                <p className="text-sm text-gray-500"><strong>Updated At:</strong> {category.updated_at}</p>
+        <div className="w-full max-w-3xl mx-auto bg-white border border-gray-200 rounded-xl shadow-sm p-6 space-y-6">
+            <div>
+                <h1 className="text-3xl font-semibold text-gray-800">{category.name}</h1>
+                <p className="text-sm text-gray-500 mt-1"><strong>Color:</strong> {category.color}</p>
+                <p className="text-sm text-gray-400 mt-1"><strong>Created At:</strong> {category.created_at}</p>
+                <p className="text-sm text-gray-400"><strong>Updated At:</strong> {category.updated_at}</p>
+            </div>
+
+            <div className="flex gap-3">
+                <Link
+                    to={`/category/update/${category.id}`}
+                    className="px-4 py-2 rounded-lg bg-blue-100 text-blue-700 hover:bg-blue-200 transition-colors"
+                >
+                    Edit
+                </Link>
+                <button
+                    onClick={handleDelete}
+                    disabled={deleting}
+                    className="px-4 py-2 rounded-lg bg-red-100 text-red-700 hover:bg-red-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    {deleting ? 'Deleting...' : 'Delete'}
+                </button>
             </div>
         </div>
     );
