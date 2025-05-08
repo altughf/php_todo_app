@@ -78,6 +78,30 @@ export default function TodoItem({ todo }) {
         <span>Due: <strong>{new Date(todo.due_date).toLocaleString()}</strong></span>
       </div>
 
+      {/* Kategoriler */}
+      {todo.category_ids && todo.category_ids.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {todo.category_ids.map((cat) => (
+            <span
+              key={cat.id}
+              className="text-xs px-2 py-1 rounded-md select-none"
+              style={{
+                backgroundColor: cat.color,
+                color: '#fff',
+              }}
+            >
+              {cat.name}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Oluşturulma ve güncellenme tarihleri */}
+      <div className="mt-3 text-xs text-gray-500">
+        <p>Created: {new Date(todo.created_at).toLocaleString()}</p>
+        <p>Updated: {new Date(todo.updated_at).toLocaleString()}</p>
+      </div>
+
       <div className="flex gap-2 mt-4">
         <button
           className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
