@@ -1,5 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+
+import FormCategoryPage from './category/CategoryForm';
+
 import FormTodoPage from './pages/TodoForm';
 import ListTodosPage from './pages/TodoListPage';
 import OpenTodoPage from './pages/TodoDetailPage';
@@ -43,6 +46,9 @@ function App() {
           <Route path="/list" element={<ListTodosPage />} />
           <Route path="/open/:id" element={<OpenTodoPage />} />
           <Route path="/update/:id" element={<FormTodoPage mode="edit" />} />
+
+          <Route path="/category/add" element={<FormCategoryPage mode="add" />} />
+          <Route path="/category/update/:id" element={<FormCategoryPage mode="edit" />} />
         </Routes>
 
       </div>
