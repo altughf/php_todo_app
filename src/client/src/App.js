@@ -17,36 +17,52 @@ function App() {
     <Router>
       <div>
 
-        <div className="flex justify-center items-center p-4">
+        <div className="flex justify-center px-4 py-6 mb-5 bg-white shadow-sm">
+          <div className="flex items-center justify-between w-full max-w-7xl">
+            
+            {/* LOGO */}
+            <Link to="/">
+              <img src={logo} alt="Logo" className="h-8" />
+            </Link>
 
-          <div className="flex justify-between items-center w-full h-28 rounded-lg bg-neutral-200 p-6 max-w-7xl">
-
-          {/* LOGO */}
-          <Link to="/">
-            <img src={logo} alt="Logo" className="h-9 w-full" />
-          </Link>
-
-          {/* NAVIGATION */}
-          <nav>
-            <ul className="font-poppins font-bold text-xl flex gap-3 list-none p-0">
-              <li>
-                <Link to="/add" className="p-4 rounded-lg bg-neutral-100 text-neutral-500">Add Todo</Link>
-              </li>
-              <li>
-                <Link to="/list" className="p-4 rounded-lg bg-neutral-100 text-neutral-500">List Todos</Link>
-              </li>
-
-              <li>
-                <Link to="/category/add" className="p-4 rounded-lg bg-neutral-300 text-neutral-500">Add Category</Link>
-              </li>
-              <li>
-                <Link to="/categories" className="p-4 rounded-lg bg-neutral-300 text-neutral-500">Categories</Link>
-              </li>
-            </ul>
-          </nav>
-
+            {/* NAVIGATION */}
+            <nav>
+              <ul className="flex gap-4 text-base font-medium text-neutral-600">
+                <li>
+                  <Link
+                    to="/add"
+                    className="px-4 py-2 rounded-md hover:bg-neutral-100 transition-colors"
+                  >
+                    Add Todo
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/list"
+                    className="px-4 py-2 rounded-md hover:bg-neutral-100 transition-colors"
+                  >
+                    List Todos
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/category/add"
+                    className="px-4 py-2 rounded-md hover:bg-neutral-100 transition-colors"
+                  >
+                    Add Category
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/categories"
+                    className="px-4 py-2 rounded-md hover:bg-neutral-100 transition-colors"
+                  >
+                    Categories
+                  </Link>
+                </li>
+              </ul>
+            </nav>
           </div>
-
         </div>
 
         <Routes>
