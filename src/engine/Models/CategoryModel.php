@@ -60,7 +60,7 @@ class CategoryModel {
 
         $this->databaseInstance->query(
 
-            'SELECT categories.id, categories.name, categories.color
+            'SELECT categories.id, categories.name, categories.color, categories.created_at, categories.updated_at
             FROM categories
             WHERE categories.id = :category_item_id'
 
@@ -95,7 +95,7 @@ class CategoryModel {
 
         $this->databaseInstance->query(
 
-            'SELECT categories.id,categories.name, categories.color
+            'SELECT categories.id,categories.name, categories.color, categories.created_at, categories.updated_at
             FROM categories'
 
         );

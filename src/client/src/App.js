@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 import FormCategoryPage from './category/CategoryForm';
 import ListCategoriesPage from './category/CategoriesListPage';
+import OpenCategoryPage from './category/CategoryDetailPage';
 
 import FormTodoPage from './pages/TodoForm';
 import ListTodosPage from './pages/TodoListPage';
@@ -52,6 +53,7 @@ function App() {
           <Route path="/category/update/:id" element={<FormCategoryPage mode="edit" />} />
 
           <Route path="/categories" element={<ListCategoriesPage />} />
+          <Route path="/category/:id" element={<OpenCategoryPage />} />
 
         </Routes>
 
