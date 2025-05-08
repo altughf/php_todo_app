@@ -10,6 +10,17 @@ class CategoryController {
         $this->categoryModel_instance = new CategoryModel;
     }
 
+    public function index(){
+
+        // DEFAULT LIST # OR # ANALYZE QUERY
+
+        $data = $this->categoryModel_instance->categoriesModel();
+
+        http_response_code(200);
+        echo json_encode(['status' => 'success','information' => $data]);
+
+    }
+
     public function open($id){
 
         // OPEN FROM DATABASE

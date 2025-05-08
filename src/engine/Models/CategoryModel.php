@@ -91,6 +91,21 @@ class CategoryModel {
         if($this->databaseInstance->execute()){ return true; } else { return false; }
     }
 
+    public function categoriesModel(){
+
+        $this->databaseInstance->query(
+
+            'SELECT categories.id,categories.name, categories.color
+            FROM categories'
+
+        );
+
+        $todos = $this->databaseInstance->resultSet();
+
+        return $todos;
+
+    }
+
 }
 
 ?>
