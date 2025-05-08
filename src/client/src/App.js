@@ -35,6 +35,13 @@ function App() {
               <li>
                 <Link to="/list" className="p-4 rounded-lg bg-neutral-100 text-neutral-500">List Todos</Link>
               </li>
+
+              <li>
+                <Link to="/category/add" className="p-4 rounded-lg bg-neutral-300 text-neutral-500">Add Category</Link>
+              </li>
+              <li>
+                <Link to="/categories" className="p-4 rounded-lg bg-neutral-300 text-neutral-500">Categories</Link>
+              </li>
             </ul>
           </nav>
 

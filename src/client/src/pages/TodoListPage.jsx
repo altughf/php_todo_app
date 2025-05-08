@@ -31,6 +31,9 @@ export default function ListTodos() {
       }
 
       const data = await response.json();
+
+      console.log(data);
+
       setTodos(data.information);
       setPagination(data.meta.pagination);
     } catch (error) {
