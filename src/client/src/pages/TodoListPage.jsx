@@ -32,6 +32,7 @@ export default function ListTodos() {
 
       const data = await response.json();
 
+      console.log('API response information :');
       console.log(data);
 
       setTodos(data.information);
