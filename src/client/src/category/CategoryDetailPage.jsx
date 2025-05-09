@@ -56,14 +56,14 @@ export default function OpenCategory() {
             <div className="flex gap-3">
                 <Link
                     to={`/category/update/${category.id}`}
-                    className="px-4 py-2 rounded-lg bg-blue-100 text-blue-700 hover:bg-blue-200 transition-colors"
+                    className="flex justify-center items-center w-32 h-10 border border-sky-400 text-sky-600 hover:bg-sky-50 rounded text-sm"
                 >
                     Edit
                 </Link>
                 <button
                     onClick={handleDelete}
                     disabled={deleting}
-                    className="px-4 py-2 rounded-lg bg-red-100 text-red-700 hover:bg-red-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex justify-center items-center w-32 h-10 border border-gray-400 text-gray-700 hover:bg-gray-100 rounded text-sm"
                 >
                     {deleting ? 'Deleting...' : 'Delete'}
                 </button>
