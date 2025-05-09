@@ -126,7 +126,7 @@ export default function CreateTodo({ mode = 'add' }) {
   };
 
   return (
-    <div className="flex justify-center items-center w-full min-h-screen bg-neutral-100 px-4">
+    <div className="flex justify-center items-center w-full min-h-screen bg-neutral-100 p-8 max-w-7xl m-auto">
       <div className="flex flex-col w-full max-w-xl p-8 rounded-xl shadow-md bg-white gap-6">
         <h2 className="text-3xl font-semibold text-gray-800">
           {mode === 'edit' ? 'Update To Do!' : 'Create To Do!'}

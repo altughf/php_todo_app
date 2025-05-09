@@ -68,7 +68,7 @@ export default function CreateCategory({ mode = 'add' }) {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-neutral-100 px-4">
+    <div className="flex justify-center items-center min-h-screen bg-neutral-100 p-8 max-w-7xl m-auto">
       <div className="flex flex-col w-full max-w-md rounded-2xl shadow-lg bg-white p-8 space-y-6">
         <h2 className="text-3xl font-semibold text-neutral-800">
           {mode === 'edit' ? 'Update Category' : 'Create Category'}
