@@ -26,7 +26,8 @@ Router::post('/api/todos', [TodoController::class, 'create']);
 Router::put('/api/todos/{id}', [TodoController::class, 'update']);
 Router::patch('/api/todos/{id}/status', [TodoController::class, 'updateStatus']);
 Router::delete('/api/todos/{id}', [TodoController::class, 'delete']);
-Router::get('/api/todos/search', [TodoController::class, 'search']);
+
+// Router::get('/api/todos/search', [TodoController::class, 'search']); > ONE CONTROLLER & ONE MODEL
 
 Router::get('/api/categories', [CategoryController::class, 'index']);
 Router::get('/api/categories/{id}', [CategoryController::class, 'open']);

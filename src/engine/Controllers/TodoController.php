@@ -150,6 +150,10 @@ class TodoController {
 
     }
 
+    /*
+    
+    ##### ONE CONTROLLER & ONE MODEL #####
+
     public function search(){
 
         $query = $_GET['q'] ?? '';
@@ -161,6 +165,8 @@ class TodoController {
         echo json_encode(['status' => 'success','information' => 'Find', 'query' => $query]);
 
     }
+
+    */
 
 }
 
