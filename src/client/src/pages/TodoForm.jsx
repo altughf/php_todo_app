@@ -62,9 +62,39 @@ export default function CreateTodo({ mode = 'add' }) {
     );
   };
 
+  // Validate form
+  const validateForm = () => {
+    const errors = [];
+    
+    if (!title || title.trim().length < 3) {
+      errors.push('Title must be at least 3 characters long');
+    }
+    
+    if (!description || description.trim().length < 3) {
+      errors.push('Description must be at least 3 characters long');
+    }
+    
+    if (!dueTime) {
+      errors.push('Due time is required');
+    }
+    
+    if (selectedCategoryIds.length === 0) {
+      errors.push('At least one category must be selected');
+    }
+    
+    return errors;
+  };
+
   // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const validationErrors = validateForm();
+    
+    if (validationErrors.length > 0) {
+      alert(`Please fix the following errors:\n\n${validationErrors.join('\n')}`);
+      return;
+    }
 
     const payload = {
       'todo-title': title,
