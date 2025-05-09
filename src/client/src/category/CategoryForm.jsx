@@ -50,49 +50,52 @@ export default function CreateCategory({ mode = 'add' }) {
       console.log(`Category ${mode === 'edit' ? 'updated' : 'created'}:`, data);
 
       navigate('/categories');
-
     } catch (err) {
       console.error('Submission error:', err);
     }
   };
 
   return (
-    <div className="flex justify-center items-center w-full rounded-lg bg-neutral-100 p-4 max-w-7xl m-auto">
-      <div className="relative flex items-start flex-col p-6 gap-5 w-96 h-full font-poppins bg-neutral-200">
-        <div className="font-bold text-4xl mb-4">
+    <div className="flex justify-center items-center min-h-screen bg-neutral-100 px-4">
+      <div className="flex flex-col w-full max-w-md rounded-2xl shadow-lg bg-white p-8 space-y-6">
+        <h2 className="text-3xl font-semibold text-neutral-800">
           {mode === 'edit' ? 'Update Category' : 'Create Category'}
-        </div>
-        <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit}>
+        </h2>
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-5">
           {/* Name */}
-          <div className="flex flex-col gap-2 w-full">
-            <label className="text-xl font-bold" htmlFor="name">Name</label>
+          <div className="flex flex-col space-y-2">
+            <label htmlFor="name" className="text-lg font-medium text-neutral-700">
+              Name
+            </label>
             <input
               id="name"
-              className="default-input p-2 text-lg font-bold"
               type="text"
               placeholder="Category Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
+              className="px-4 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-neutral-900"
             />
           </div>
 
           {/* Color */}
-          <div className="flex flex-col gap-2 w-full">
-            <label className="text-xl font-bold" htmlFor="color">Color</label>
+          <div className="flex flex-col space-y-2">
+            <label htmlFor="color" className="text-lg font-medium text-neutral-700">
+              Color
+            </label>
             <input
               id="color"
-              className="default-input p-2 h-12"
               type="color"
               value={color}
               onChange={(e) => setColor(e.target.value)}
+              className="w-16 h-10 p-1 rounded-md border border-neutral-300 cursor-pointer"
             />
           </div>
 
-          {/* Submit */}
+          {/* Submit Button */}
           <button
-            className="flex justify-center items-center cursor-pointer text-lg font-bold border p-3 bg-white h-12 w-full"
             type="submit"
+            className="mt-2 w-full py-3 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200"
           >
             {mode === 'edit' ? 'UPDATE' : 'ADD'}
           </button>

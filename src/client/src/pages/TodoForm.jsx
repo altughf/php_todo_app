@@ -96,17 +96,18 @@ export default function CreateTodo({ mode = 'add' }) {
   };
 
   return (
-    <div className="flex justify-center items-center w-full rounded-lg bg-neutral-100 p-4 max-w-7xl m-auto">
-      <div className="relative flex items-start flex-col p-6 gap-5 w-96 h-full font-poppins bg-neutral-200">
-        <div className="font-bold text-4xl">
+    <div className="flex justify-center items-center w-full min-h-screen bg-neutral-100 px-4">
+      <div className="flex flex-col w-full max-w-xl p-8 rounded-xl shadow-md bg-white gap-6">
+        <h2 className="text-3xl font-semibold text-gray-800">
           {mode === 'edit' ? 'Update To Do!' : 'Create To Do!'}
-        </div>
-        <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit}>
+        </h2>
+
+        <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
           {/* Title */}
-          <div className="flex flex-col gap-2 w-full">
-            <div className="text-xl font-bold">Title</div>
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-gray-700">Title</label>
             <input
-              className="default-input p-2 text-lg font-bold"
+              className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               type="text"
               placeholder="Type Title"
               value={title}
@@ -115,10 +116,10 @@ export default function CreateTodo({ mode = 'add' }) {
           </div>
 
           {/* Description */}
-          <div className="flex flex-col gap-2 w-full">
-            <div className="text-xl font-bold">Description</div>
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-gray-700">Description</label>
             <textarea
-              className="default-input p-2 text-lg font-bold"
+              className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Type Description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -126,71 +127,75 @@ export default function CreateTodo({ mode = 'add' }) {
           </div>
 
           {/* Status */}
-          <div className="text-xl font-bold text-neutral-500">Status</div>
-          <div className="flex flex-col bg-neutral-300 p-4 gap-2">
-            {['pending', 'in_progress', 'completed', 'cancelled'].map((s) => (
-              <label key={s} className="text-base font-medium flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="todo-status"
-                  value={s}
-                  checked={status === s}
-                  onChange={() => setStatus(s)}
-                />
-                {s.replace('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
-              </label>
-            ))}
+          <div className="flex flex-col gap-2">
+            <span className="text-sm font-medium text-gray-700">Status</span>
+            <div className="flex flex-col gap-2 p-3 bg-neutral-100 rounded-md">
+              {['pending', 'in_progress', 'completed', 'cancelled'].map((s) => (
+                <label key={s} className="flex items-center gap-2 text-sm">
+                  <input
+                    type="radio"
+                    name="todo-status"
+                    value={s}
+                    checked={status === s}
+                    onChange={() => setStatus(s)}
+                  />
+                  {s.replace('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
+                </label>
+              ))}
+            </div>
           </div>
 
           {/* Priority */}
-          <div className="text-xl font-bold text-neutral-500">Priority</div>
-          <div className="flex flex-col bg-neutral-300 p-4 gap-2">
-            {['low', 'medium', 'high'].map((p) => (
-              <label key={p} className="text-base font-medium flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="todo-priority"
-                  value={p}
-                  checked={priority === p}
-                  onChange={() => setPriority(p)}
-                />
-                {p.charAt(0).toUpperCase() + p.slice(1)}
-              </label>
-            ))}
+          <div className="flex flex-col gap-2">
+            <span className="text-sm font-medium text-gray-700">Priority</span>
+            <div className="flex flex-col gap-2 p-3 bg-neutral-100 rounded-md">
+              {['low', 'medium', 'high'].map((p) => (
+                <label key={p} className="flex items-center gap-2 text-sm">
+                  <input
+                    type="radio"
+                    name="todo-priority"
+                    value={p}
+                    checked={priority === p}
+                    onChange={() => setPriority(p)}
+                  />
+                  {p.charAt(0).toUpperCase() + p.slice(1)}
+                </label>
+              ))}
+            </div>
           </div>
 
           {/* Due Time */}
-          <div className="text-xl font-bold text-neutral-500">Due Time</div>
-          <div className="flex flex-col bg-neutral-300 p-4 gap-2">
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-gray-700">Due Time</label>
             <input
-              className="p-3 border focus:outline-none"
+              className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
               type="datetime-local"
-              name="todo-due-time"
-              id="due-time"
               value={dueTime}
               onChange={(e) => setDueTime(e.target.value)}
             />
           </div>
 
           {/* Categories */}
-          <div className="text-xl font-bold text-neutral-500">Categories</div>
-          <div className="flex flex-col bg-neutral-300 p-4 gap-2">
-            {categories.map((cat) => (
-              <label key={cat.id} className="text-base font-medium flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  value={cat.id}
-                  checked={selectedCategoryIds.includes(cat.id)}
-                  onChange={() => toggleCategorySelection(cat.id)}
-                />
-                {cat.name}
-              </label>
-            ))}
+          <div className="flex flex-col gap-2">
+            <span className="text-sm font-medium text-gray-700">Categories</span>
+            <div className="flex flex-col gap-2 p-3 bg-neutral-100 rounded-md">
+              {categories.map((cat) => (
+                <label key={cat.id} className="flex items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    value={cat.id}
+                    checked={selectedCategoryIds.includes(cat.id)}
+                    onChange={() => toggleCategorySelection(cat.id)}
+                  />
+                  {cat.name}
+                </label>
+              ))}
+            </div>
           </div>
 
           {/* Submit */}
           <button
-            className="flex justify-center items-center cursor-pointer text-lg font-bold border p-3 bg-white h-12 w-full"
+            className="mt-2 py-3 px-5 bg-blue-500 text-white font-semibold rounded-md shadow hover:bg-blue-600 transition"
             type="submit"
           >
             {mode === 'edit' ? 'UPDATE' : 'ADD'}
