@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function OpenCategory() {
     const { id } = useParams();
@@ -41,7 +42,7 @@ export default function OpenCategory() {
         }
     };
 
-    if (loading) return <div className="text-center text-gray-500 mt-10">Loading...</div>;
+    if (loading) return <LoadingSpinner />;
     if (error) return <div className="text-center text-red-500 mt-10">Error: {error}</div>;
 
     return (
@@ -56,14 +57,14 @@ export default function OpenCategory() {
             <div className="flex gap-3">
                 <Link
                     to={`/category/update/${category.id}`}
-                    className="flex justify-center items-center w-32 h-10 border border-sky-400 text-sky-600 hover:bg-sky-50 rounded text-sm"
+                    className="flex justify-center items-center w-24 h-10 border border-sky-400 text-sky-600 hover:bg-sky-50 rounded text-sm"
                 >
                     Edit
                 </Link>
                 <button
                     onClick={handleDelete}
                     disabled={deleting}
-                    className="flex justify-center items-center w-32 h-10 border border-gray-400 text-gray-700 hover:bg-gray-100 rounded text-sm"
+                    className="flex justify-center items-center w-24 h-10 border border-gray-400 text-gray-700 hover:bg-gray-100 rounded text-sm"
                 >
                     {deleting ? 'Deleting...' : 'Delete'}
                 </button>
