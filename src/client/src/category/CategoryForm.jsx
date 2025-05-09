@@ -7,6 +7,7 @@ export default function CreateCategory({ mode = 'add' }) {
 
   const [name, setName] = useState('');
   const [color, setColor] = useState('#FFFFFF');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (mode === 'edit' && id) {
@@ -29,6 +30,17 @@ export default function CreateCategory({ mode = 'add' }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validation
+    if (!name.trim()) {
+      setError('Name is required');
+      return;
+    } else if (name.trim().length < 3) {
+      setError('Name must be at least 3 characters');
+      return;
+    } else {
+      setError('');
+    }
 
     const payload = {
       'category-name': name.trim(),
@@ -72,10 +84,14 @@ export default function CreateCategory({ mode = 'add' }) {
               type="text"
               placeholder="Category Name"
               value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
+              onChange={(e) => {
+                setName(e.target.value);
+                // Clear error when user starts typing
+                if (error) setError('');
+              }}
               className="px-4 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-neutral-900"
             />
+            {error && <p className="text-red-500 text-sm">{error}</p>}
           </div>
 
           {/* Color */}
