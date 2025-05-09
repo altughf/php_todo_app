@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import FormCategoryPage from './category/CategoryForm';
 import ListCategoriesPage from './category/CategoriesListPage';
 import OpenCategoryPage from './category/CategoryDetailPage';
+import CategoryTodosPage from './category/CategoryTodosPage';
 
 import FormTodoPage from './pages/TodoForm';
 import ListTodosPage from './pages/TodoListPage';
@@ -77,6 +78,8 @@ function App() {
 
           <Route path="/categories" element={<ListCategoriesPage />} />
           <Route path="/category/:id" element={<OpenCategoryPage />} />
+
+          <Route path="/categories/:id" element={<CategoryTodosPage />} />
 
         </Routes>
 
