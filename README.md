@@ -46,20 +46,20 @@ Docker & React 'proxy' pre-ready for this domain.
 
 ```bash
 # Clone Repository
-git clone https://github.com/altughf/php-to
+git clone https://github.com/altughf/php-todo-app
 ```
 
 ### Back-End initialize
 
 ```bash
 #1 : install back-end packages
-cd your-repositories/php-to/engine
+cd your-repositories/php-todo-app/engine
 composer install
 ```
 
 ```bash
 #2 : Start Docker > first time docker will pull all images
-cd your-repositories/php-to
+cd your-repositories/php-todo-app
 
 docker-compose up -d
 ```
@@ -68,13 +68,13 @@ docker-compose up -d
 
 ```bash
 #3 : install front-end packages
-cd your-repositories/php-to/client
+cd your-repositories/php-todo-app/client
 npm install
 ```
 
 ```bash
 #4 : initialize react
-cd your-repositories/php-to/client
+cd your-repositories/php-todo-app/client
 npm start
 
 [http://localhost:3000/]
@@ -82,7 +82,7 @@ npm start
 
 ```bash
 #5 : initialize tailwind
-cd your-repositories/php-to/client
+cd your-repositories/php-todo-app/client
 npm run style
 ```
 
@@ -90,7 +90,7 @@ npm run style
 
 ```bash
 # Add database demo tasks > if docker container runned you can access phpmyadmin
-import 'php_to_database' with phpmyadmin / [http://localhost:8081/]
+import 'php_app_database' with phpmyadmin / [http://localhost:8081/]
 ```
 
 ```bash
