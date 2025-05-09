@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CategoryItem from './CategoryItem';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function CategoryListPage() {
   const [categories, setCategories] = useState([]);
@@ -26,7 +27,7 @@ export default function CategoryListPage() {
   }, []);
 
   if (loading) {
-    return <div className="text-center p-4">Loading categories...</div>;
+    return <LoadingSpinner />;
   }
 
   return (

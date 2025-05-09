@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import TodoItem from '../components/TodoItem';
 import TodoListFilter from '../components/TodoFilter';
 import TodoPagination from '../components/TodoPagination';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function ListTodos() {
   const [todos, setTodos] = useState([]);
@@ -67,9 +68,9 @@ export default function ListTodos() {
     <div className="flex flex-col items-center w-full rounded-lg bg-neutral-100 p-4 max-w-7xl m-auto">
       <TodoListFilter filters={filters} setFilters={setFilters} />
 
-      <div className="flex items-center w-full h-full max-w-3xl">
+      <div className="flex justify-center items-center w-full h-full max-w-3xl">
         {loading ? (
-          <div className="text-center p-4">Loading todos...</div>
+          <LoadingSpinner />
         ) : todos.length === 0 ? (
           <div className="text-center p-4">No todos found.</div>
         ) : (
