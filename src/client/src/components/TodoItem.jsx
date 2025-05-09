@@ -101,6 +101,12 @@ export default function TodoItem({ todo }) {
 
       <div className="flex gap-2 mt-4">
         <Link
+          to={`/open/${todo.id}`}
+          className="px-3 py-1 border border-blue-400 text-blue-600 hover:bg-blue-50 rounded text-sm"
+        >
+          Open
+        </Link>
+        <Link
           to={`/update/${todo.id}`}
           className="px-3 py-1 border border-gray-400 text-gray-700 hover:bg-gray-100 rounded text-sm"
         >
